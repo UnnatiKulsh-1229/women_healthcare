@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 function Dashboard() {
   return (
     <div style={styles.container}>
@@ -11,7 +12,7 @@ function Dashboard() {
 
       {/* Cards */}
       <div style={styles.cardContainer}>
-        <Link to="/tracker" style={styles.card}>
+        <Link to="/CycleTracker" style={styles.card}>
           <h2>📅 Menstrual Tracker</h2>
           <p>
             Track your menstrual cycle, predict your next period, and monitor
@@ -19,19 +20,31 @@ function Dashboard() {
           </p>
         </Link>
 
-        <Link to="/symptoms" style={styles.card}>
+        <Link to="/SymptomChecker" style={styles.card}>
           <h2>🩺 AI Symptom Checker</h2>
           <p>
             Enter your symptoms and receive AI-generated health suggestions.
           </p>
         </Link>
 
-        <Link to="/records" style={styles.card}>
+        <Link to="/HealthRecords" style={styles.card}>
           <h2>📋 Health Records</h2>
           <p>
             Save and manage your medical history and health notes securely.
           </p>
         </Link>
+        
+        {/* <button onClick={()=>navigate("/CycleTracker")}>
+    Period Tracker
+</button>
+
+<button onClick={()=>navigate("/SymptomChecker")}>
+    Symptoms
+</button>
+
+<button onClick={()=>navigate("/HealthRecords")}>
+    Health Recorder
+</button>*/}
       </div>
 
       {/* Health Tips */}
@@ -53,6 +66,15 @@ function Dashboard() {
       </footer>
     </div>
   );
+  const navigate = useNavigate();
+
+useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        navigate("/");
+    }
+}, []);
 }
 
 const styles = {

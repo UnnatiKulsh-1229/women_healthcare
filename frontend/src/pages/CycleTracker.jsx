@@ -1,69 +1,54 @@
 import { useState } from "react";
 
-function CycleTracker() {
-  const [cycle, setCycle] = useState({
-    lastPeriod: "",
-    cycleLength: "",
-  });
+function Tracker() {
 
-  const handleChange = (e) => {
-    setCycle({
-      ...cycle,
-      [e.target.name]: e.target.value,
-    });
-  };
+    const [lastPeriod, setLastPeriod] = useState("");
+    const [cycleLength, setCycleLength] = useState(28);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    const calculateNext = () => {
 
-    alert("Cycle information saved!");
-    console.log(cycle);
-  };
+        if (!lastPeriod) {
+            alert("Please select a date");
+            return;
+        }
 
-  return (
-    <div style={styles.container}>
-      <h1>Menstrual Cycle Tracker</h1>
+        const date = new Date(lastPeriod);
+        date.setDate(date.getDate() + Number(cycleLength));
 
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <label>Last Period Date</label>
+        console.log("Estimated Next Period: " + date.toDateString());
+    };
 
-        <input
-          type="date"
-          name="lastPeriod"
-          value={cycle.lastPeriod}
-          onChange={handleChange}
-          required
-        />
+    return (
+        <div className="container">
 
-        <label>Cycle Length (Days)</label>
+            <h2>Period Tracker</h2>
 
-        <input
-          type="number"
-          name="cycleLength"
-          value={cycle.cycleLength}
-          onChange={handleChange}
-          placeholder="28"
-          required
-        />
+            <label>Last Period Date</label>
 
-        <button>Save</button>
-      </form>
-    </div>
-  );
+            <input
+                type="date"
+                value={lastPeriod}
+                onChange={(e)=>setLastPeriod(e.target.value)}
+            />
+
+            <br/><br/>
+
+            <label>Cycle Length</label>
+
+            <input
+                type="number"
+                value={cycleLength}
+                onChange={(e)=>setCycleLength(e.target.value)}
+            />
+
+            <br/><br/>
+
+            <button onClick={calculateNext}>
+                Calculate
+            </button>
+
+        </div>
+    );
 }
 
-const styles = {
-  container: {
-    textAlign: "center",
-    padding: "40px",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    width: "350px",
-    margin: "auto",
-    gap: "15px",
-  },
-};
-
-export default CycleTracker;
+export default Tracker;

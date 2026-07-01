@@ -1,24 +1,42 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 function Register() {
+  c
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    age: "",
-    height: "",
-    weight: "",
-  });
+  name: "",
+  email: "",
+  password: "",
+  age: "",
+  height: "",
+  weight: "",
+});
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
+const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/api/auth/register",
+      {
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+      }
+    );
+    alert(response.data.message);
+    navigate("/");
+  } catch (error) {
+   if (error.response) {
+      alert(error.response.data.message);
+    } else {
+      alert("Server Error");
+    }
+  }
+};
+  /*const handleSubmit = (e) => {
     e.preventDefault();
 
     console.log(formData);
@@ -26,7 +44,7 @@ function Register() {
     // API call will be added on Day 4
     alert("Registration Successful!");
   };
-
+*/
   return (
     <div
       style={{
@@ -117,7 +135,7 @@ function Register() {
         </form>
 
         <p style={{ textAlign: "center", marginTop: "15px" }}>
-          Already have an account? <Link to="/Login">Login</Link>
+          Already have an account? <Link to="/">Login</Link>
         </p>
       </div>
     </div>

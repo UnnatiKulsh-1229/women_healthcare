@@ -1,66 +1,48 @@
 import { useState } from "react";
 
-function HealthRecords() {
-  const [record, setRecord] = useState({
-    date: "",
-    notes: "",
-  });
+function Recorder(){
 
-  const handleChange = (e) => {
-    setRecord({
-      ...record,
-      [e.target.name]: e.target.value,
-    });
-  };
+    const [mood,setMood]=useState("");
+    const [water,setWater]=useState("");
+    const [notes,setNotes]=useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    alert("Record Saved!");
-
-    console.log(record);
-  };
-
-  return (
-    <div style={styles.container}>
-      <h1>Health Records</h1>
-
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <input
-          type="date"
-          name="date"
-          value={record.date}
-          onChange={handleChange}
-          required
-        />
-
-        <textarea
-          rows="6"
-          name="notes"
-          placeholder="Enter health notes..."
-          value={record.notes}
-          onChange={handleChange}
-          required
-        ></textarea>
-
-        <button>Save Record</button>
-      </form>
-    </div>
-  );
+    const saveLog=()=>{
+        alert("Health Record Saved!");
+        console.log({
+            mood,
+            water,
+            notes
+        });
+    };
+    return(
+        <div className="container">
+            <h2>Daily Health Recorder</h2>
+            <label>Mood</label>
+            <input
+                type="text"
+                placeholder="Happy / Tired / Irritated"
+                value={mood}
+                onChange={(e)=>setMood(e.target.value)}
+            />
+            <br/><br/>
+            <label>Water Intake (Litres)</label>
+            <input
+                type="number"
+                value={water}
+                onChange={(e)=>setWater(e.target.value)}
+            />
+            <br/><br/>
+            <label>Notes</label>
+            <textarea
+                rows="5"
+                value={notes}
+                onChange={(e)=>setNotes(e.target.value)}
+            />
+            <br/><br/>
+            <button onClick={saveLog}>
+                Save
+            </button>
+        </div>
+    );
 }
-
-const styles = {
-  container: {
-    textAlign: "center",
-    padding: "40px",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    width: "450px",
-    margin: "auto",
-    gap: "20px",
-  },
-};
-
-export default HealthRecords;
+export default Recorder;

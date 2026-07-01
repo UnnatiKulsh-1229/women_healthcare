@@ -1,46 +1,70 @@
 import { useState } from "react";
 
-function SymptomChecker() {
-  const [symptoms, setSymptoms] = useState("");
+function Symptoms(){
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    const [selected,setSelected]=useState([]);
 
-    alert("Symptoms submitted for AI analysis.");
+    const symptoms=[
+        "Headache",
+        "Cramps",
+        "Fatigue",
+        "Back Pain",
+        "Mood Swings",
+        "Acne",
+        "Bloating"
+    ];
 
-    console.log(symptoms);
-  };
+    const toggle=(symptom)=>{
 
-  return (
-    <div style={styles.container}>
-      <h1>AI Symptom Checker</h1>
+        if(selected.includes(symptom)){
+            setSelected(selected.filter(item=>item!==symptom));
+        }
 
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <textarea
-          rows="8"
-          placeholder="Enter symptoms here..."
-          value={symptoms}
-          onChange={(e) => setSymptoms(e.target.value)}
-        ></textarea>
+        else{
+            setSelected([...selected,symptom]);
+        }
 
-        <button>Analyze Symptoms</button>
-      </form>
-    </div>
-  );
+    };
+
+    return(
+
+        <div className="container">
+
+            <h2>Symptom Recorder</h2>
+
+            {
+                symptoms.map((item,index)=>(
+                    <div key={index}>
+
+                        <input
+                            type="checkbox"
+                            checked={selected.includes(item)}
+                            onChange={()=>toggle(item)}
+                        />
+
+                        {item}
+
+                    </div>
+                ))
+            }
+
+            <br/>
+
+            <h3>Selected Symptoms</h3>
+
+            <ul>
+
+                {
+                    selected.map((item,index)=>(
+                        <li key={index}>{item}</li>
+                    ))
+                }
+
+            </ul>
+
+        </div>
+
+    );
 }
 
-const styles = {
-  container: {
-    textAlign: "center",
-    padding: "40px",
-  },
-  form: {
-    width: "500px",
-    margin: "auto",
-    display: "flex",
-    flexDirection: "column",
-    gap: "20px",
-  },
-};
-
-export default SymptomChecker;
+export default Symptoms;

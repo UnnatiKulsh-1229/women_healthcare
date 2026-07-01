@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
-
+import axios from "axios";
 
 
 function Login() {
@@ -17,12 +17,34 @@ function Login() {
     });
   };
 
-  const handleSubmit = (e) => {
+ const handleSubmit = async (e) => {
   e.preventDefault();
 
-  
-  alert("Login Successful!");
-  navigate("/dashboard");
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/api/auth/login",
+      loginData
+    );
+
+    // Save JWT Token
+    localStorage.setItem("token", response.data.token);
+
+    // Save Email (optional)
+    localStorage.setItem("email", loginData.email);
+
+    alert(response.data.message);
+
+    navigate("/Dashboard");
+
+  } catch (error) {
+
+    if (error.response) {
+      alert(error.response.data.message);
+    } else {
+      alert("Server Error");
+    }
+
+  }
 };
   return (
     <div style={containerStyle}>
