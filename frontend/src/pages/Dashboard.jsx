@@ -1,14 +1,39 @@
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
 function Dashboard() {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        navigate("/");
+    }
+}, []);
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
+
+    alert("Logged out successfully!");
+
+    navigate("/", { replace: true });
+  };
+
   return (
     <div style={styles.container}>
       {/* Header */}
       <header style={styles.header}>
-        <h1>🌸 Women's Healthcare Dashboard</h1>
-        <p>Welcome! Take charge of your health with AI-powered insights.</p>
-      </header>
+  <div style={styles.headerTop}>
+    <h1>🌸 Women's Healthcare Dashboard</h1>
+
+    <button style={styles.logoutBtn} onClick={handleLogout}>
+      Logout
+    </button>
+  </div>
+
+  <p>Welcome! Take charge of your health with AI-powered insights.</p>
+</header>
 
       {/* Cards */}
       <div style={styles.cardContainer}>
@@ -34,18 +59,7 @@ function Dashboard() {
           </p>
         </Link>
         
-        {/* <button onClick={()=>navigate("/CycleTracker")}>
-    Period Tracker
-</button>
-
-<button onClick={()=>navigate("/SymptomChecker")}>
-    Symptoms
-</button>
-
-<button onClick={()=>navigate("/HealthRecords")}>
-    Health Recorder
-</button>*/}
-      </div>
+        </div>
 
       {/* Health Tips */}
       <div style={styles.tipBox}>
@@ -66,18 +80,24 @@ function Dashboard() {
       </footer>
     </div>
   );
-  const navigate = useNavigate();
-
-useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-        navigate("/");
-    }
-}, []);
 }
 
 const styles = {
+  headerTop: {
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+},
+
+logoutBtn: {
+  backgroundColor: "#131212",
+  color: "white",
+  border: "none",
+  padding: "10px 18px",
+  borderRadius: "6px",
+  cursor: "pointer",
+  fontSize: "15px",
+},
   container: {
     minHeight: "100vh",
     backgroundColor: "#f4f7fb",

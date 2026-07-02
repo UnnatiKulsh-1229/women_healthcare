@@ -7,6 +7,7 @@ import CycleTracker from "./pages/CycleTracker";
 import SymptomChecker from "./pages/SymptomChecker";
 import HealthRecords from "./pages/HealthRecords";
 
+
 function App() {
   return (
     <BrowserRouter>
