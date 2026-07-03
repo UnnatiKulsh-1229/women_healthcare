@@ -1,16 +1,20 @@
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import Sidebar from "../components/Sidebar";
+import "../style/Dashboard.css";
+import Navbar from "../components/Navbar";
 function Dashboard() {
   const navigate = useNavigate();
+
   useEffect(() => {
     const token = localStorage.getItem("token");
 
     if (!token) {
-        navigate("/");
+      navigate("/");
     }
-}, []);
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("email");
@@ -21,133 +25,90 @@ function Dashboard() {
   };
 
   return (
-    <div style={styles.container}>
-      {/* Header */}
-      <header style={styles.header}>
-  <div style={styles.headerTop}>
-    <h1>🌸 Women's Healthcare Dashboard</h1>
+    <div className="dashboard">
 
-    <button style={styles.logoutBtn} onClick={handleLogout}>
-      Logout
-    </button>
-  </div>
+      {/* Sidebar */}
+      <Sidebar />
 
-  <p>Welcome! Take charge of your health with AI-powered insights.</p>
-</header>
+      {/* Main Content */}
+      <div className="main-content">
+        {/* Navbar */}
+        <Navbar />
+        <div className="dashboard-header">
 
-      {/* Cards */}
-      <div style={styles.cardContainer}>
-        <Link to="/CycleTracker" style={styles.card}>
-          <h2>📅 Menstrual Tracker</h2>
-          <p>
-            Track your menstrual cycle, predict your next period, and monitor
-            your health.
-          </p>
-        </Link>
+          <div>
+            <h1>Hello, Unnati 👋</h1>
+            <p>Here's what's happening with your health today.</p>
+          </div>
 
-        <Link to="/SymptomChecker" style={styles.card}>
-          <h2>🩺 AI Symptom Checker</h2>
-          <p>
-            Enter your symptoms and receive AI-generated health suggestions.
-          </p>
-        </Link>
+          <button className="logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
 
-        <Link to="/HealthRecords" style={styles.card}>
-          <h2>📋 Health Records</h2>
-          <p>
-            Save and manage your medical history and health notes securely.
-          </p>
-        </Link>
-        
         </div>
 
-      {/* Health Tips */}
-      <div style={styles.tipBox}>
-        <h2>💡 Daily Health Tips</h2>
+        {/* Cards */}
 
-        <ul style={styles.list}>
-          <li>🥗 Eat a balanced diet rich in iron and calcium.</li>
-          <li>💧 Drink at least 2–3 litres of water every day.</li>
-          <li>🏃 Exercise for at least 30 minutes daily.</li>
-          <li>😴 Get 7–8 hours of quality sleep.</li>
-          <li>🩺 Schedule regular health check-ups.</li>
-        </ul>
+        <div className="cards">
+
+          <Link to="/CycleTracker" className="dashboard-card">
+
+            <h2>📅 Menstrual Tracker</h2>
+
+            <p>
+              Track your cycle and predict your next period.
+            </p>
+
+          </Link>
+
+          <Link to="/SymptomChecker" className="dashboard-card">
+
+            <h2>🩺 AI Symptom Checker</h2>
+
+            <p>
+              Check symptoms using AI-powered suggestions.
+            </p>
+
+          </Link>
+
+          <Link to="/HealthRecords" className="dashboard-card">
+
+            <h2>📋 Health Records</h2>
+
+            <p>
+              Manage all your medical records securely.
+            </p>
+
+          </Link>
+
+        </div>
+
+        {/* Health Tip */}
+
+        <div className="tip-card">
+
+          <h2>🌸 Daily Health Tips</h2>
+
+          <ul>
+
+            <li>🥗 Eat iron-rich foods.</li>
+
+            <li>💧 Drink 2–3 litres of water.</li>
+
+            <li>🏃 Exercise for 30 minutes.</li>
+
+            <li>😴 Sleep at least 8 hours.</li>
+
+            <li>🩺 Schedule regular checkups.</li>
+
+          </ul>
+
+        </div>
+
       </div>
 
-      {/* Footer */}
-      <footer style={styles.footer}>
-        <p>© 2026 Women's Healthcare AI System</p>
-      </footer>
     </div>
   );
 }
-
-const styles = {
-  headerTop: {
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-},
-
-logoutBtn: {
-  backgroundColor: "#131212",
-  color: "white",
-  border: "none",
-  padding: "10px 18px",
-  borderRadius: "6px",
-  cursor: "pointer",
-  fontSize: "15px",
-},
-  container: {
-    minHeight: "100vh",
-    backgroundColor: "#f4f7fb",
-    fontFamily: "Arial, sans-serif",
-    padding: "20px",
-  },
-
-  header: {
-    textAlign: "center",
-    marginBottom: "40px",
-  },
-
-  cardContainer: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "30px",
-    flexWrap: "wrap",
-    marginBottom: "50px",
-  },
-
-  card: {
-    width: "280px",
-    padding: "25px",
-    borderRadius: "12px",
-    backgroundColor: "#ffffff",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-    textDecoration: "none",
-    color: "#333",
-    transition: "0.3s",
-  },
-
-  tipBox: {
-    maxWidth: "800px",
-    margin: "0 auto",
-    backgroundColor: "#ffffff",
-    padding: "25px",
-    borderRadius: "12px",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-  },
-
-  list: {
-    lineHeight: "2",
-    fontSize: "17px",
-  },
-
-  footer: {
-    textAlign: "center",
-    marginTop: "40px",
-    color: "#666",
-  },
-};
 
 export default Dashboard;
