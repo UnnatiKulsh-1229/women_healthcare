@@ -1,0 +1,123 @@
+.records-container{
+    min-height:100vh;
+    background:linear-gradient(135deg,#f8f5ff,#f3e8ff);
+    padding:40px;
+}
+
+.records-card{
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    border-radius:25px;
+    padding:35px;
+    box-shadow:0 15px 35px rgba(139,92,246,.12);
+}
+
+.records-card h1{
+    color:#6D28D9;
+    margin-bottom:8px;
+}
+
+.records-card p{
+    color:#7C6F9E;
+    margin-bottom:30px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    margin-bottom:8px;
+    font-weight:600;
+    color:#5B21B6;
+}
+
+.form-group input,
+.form-group select{
+    padding:14px;
+    border-radius:14px;
+    border:1px solid #ddd6fe;
+    background:#faf7ff;
+    font-size:15px;
+    outline:none;
+}
+
+.form-group input:focus,
+.form-group select:focus{
+    border-color:#8B5CF6;
+    box-shadow:0 0 0 4px rgba(139,92,246,.15);
+}
+
+.upload-btn{
+    margin-top:30px;
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:16px;
+    color:white;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    background:linear-gradient(135deg,#8B5CF6,#C084FC);
+    transition:.3s;
+}
+
+.upload-btn:hover{
+    transform:translateY(-3px);
+}
+
+.records-grid{
+    margin-top:40px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+}
+
+.record-box{
+    background:#faf7ff;
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0 8px 18px rgba(139,92,246,.08);
+}
+
+.record-box h3{
+    color:#6D28D9;
+}
+
+.record-box p{
+    margin:8px 0;
+    color:#555;
+}
+
+.record-actions{
+    display:flex;
+    justify-content:space-between;
+    margin-top:15px;
+}
+
+.view-btn,
+.delete-btn{
+    border:none;
+    padding:10px 18px;
+    border-radius:10px;
+    cursor:pointer;
+    text-decoration:none;
+}
+
+.view-btn{
+    background:#E9D5FF;
+    color:#5B21B6;
+}
+
+.delete-btn{
+    background:#FEE2E2;
+    color:#DC2626;
+}

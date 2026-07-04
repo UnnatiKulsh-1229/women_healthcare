@@ -1,18 +1,17 @@
 import { useState } from "react";
-import "../style/CycleTracker.css";
 import axios from "axios";
-const userEmail = localStorage.getItem("email");
+import "../style/CycleTracker.css";
+
 function Tracker() {
   const [lastPeriod, setLastPeriod] = useState("");
   const [cycleLength, setCycleLength] = useState(28);
-
   const [nextPeriod, setNextPeriod] = useState("");
   const [ovulationDay, setOvulationDay] = useState("");
   const [fertileStart, setFertileStart] = useState("");
   const [fertileEnd, setFertileEnd] = useState("");
   const [daysRemaining, setDaysRemaining] = useState("");
   const [cycleStatus, setCycleStatus] = useState("");
-
+  const userEmail = localStorage.getItem("email");
   const calculatePrediction = () => {
     if (!lastPeriod) {
       alert("Please select your last period date.");
@@ -94,23 +93,35 @@ function Tracker() {
       <div className="tracker-card">
 
         <h1>🌸 Cycle Prediction</h1>
+        <p className="tracker-subtitle">
+  Track your cycle and receive personalized predictions.
+</p>
 
-        <label>Last Period Date</label>
+       <div className="form-grid">
 
-        <input
-          type="date"
-          value={lastPeriod}
-          onChange={(e) => setLastPeriod(e.target.value)}
-        />
+  <div className="form-group">
+    <label>📅 Last Period Date</label>
 
-        <label>Average Cycle Length (Days)</label>
+    <input
+      type="date"
+      value={lastPeriod}
+      onChange={(e) => setLastPeriod(e.target.value)}
+    />
+  </div>
 
-        <input
-          type="number"
-          value={cycleLength}
-          onChange={(e) => setCycleLength(e.target.value)}
-        />
+  <div className="form-group">
+    <label>🔄 Average Cycle Length</label>
 
+    <input
+      type="number"
+      min="21"
+      max="40"
+      value={cycleLength}
+      onChange={(e) => setCycleLength(e.target.value)}
+    />
+  </div>
+
+</div>
         <button
           className="predict-btn"
           onClick={calculatePrediction}
@@ -124,20 +135,39 @@ function Tracker() {
 
             <div className="prediction-card">
               <h3>🌸 Next Period</h3>
-              <p>{new Date(nextPeriod).toDateString()}</p>
-              <p>{nextPeriod}</p>
+              <p>
+  {new Date(nextPeriod).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  })}
+</p>
             </div>
 
             <div className="prediction-card">
               <h3>🥚 Ovulation Day</h3>
-              <p>{ovulationDay}</p>
+              <p>
+  {new Date(ovulationDay).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  })}
+</p>
             </div>
 
             <div className="prediction-card">
               <h3>💖 Fertile Window</h3>
-              <p>{fertileStart}</p>
-              <p>to</p>
-              <p>{fertileEnd}</p>
+              <p>
+  {new Date(fertileStart).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  })} to {new Date(fertileEnd).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  })}
+</p>
             </div>
 
             <div className="prediction-card">

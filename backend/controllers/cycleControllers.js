@@ -56,5 +56,35 @@ const addCycleRecord = (req, res) => {
     );
 
 };
+const getLatestCycleRecord = (req, res) => {
+    const { email } = req.params;
 
-module.exports = { addCycleRecord };
+    const sql = `
+        SELECT *
+        FROM cycle_records
+        WHERE user_email = ?
+        ORDER BY created_at DESC
+        LIMIT 1
+    `;
+
+    db.query(sql, [email], (err, result) => {
+
+        if (err) {
+            console.log(err);
+            return res.status(500).json(err);
+        }
+
+        if (result.length === 0) {
+            return res.status(404).json({
+                message: "No cycle record found"
+            });
+        }
+
+        res.json(result[0]);
+
+    });
+};
+module.exports = {
+    addCycleRecord,
+    getLatestCycleRecord
+};

@@ -1,5 +1,6 @@
 import { useState,useEffect } from "react";
 import axios from "axios";
+import "../style/HealthRecord.css";
 const userEmail = localStorage.getItem("email");
 function HealthRecords() {
   const [title, setTitle] = useState("");
@@ -79,99 +80,129 @@ const deleteRecord = async (id) => {
   };
 
   return (
-    <div style={{ padding: "30px" }}>
-      <h2>Health Records</h2>
+    <div className="records-container">
+
+<div className="records-card">
+
+<h1>🩺 Health Records</h1>
+
+<h3>
+Store prescriptions, reports and medical documents securely.
+</h3>
+
 
       <form onSubmit={uploadRecord}>
 
-        <input
-          type="text"
-          placeholder="Record Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-        />
+<div className="form-grid">
 
-        <br /><br />
+<div className="form-group">
 
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          required
-        >
-          <option value="">Select Category</option>
-          <option>Prescription</option>
-          <option>Blood Test</option>
-          <option>X-Ray</option>
-          <option>Ultrasound</option>
-          <option>Other</option>
-        </select>
+<label>Record Title</label>
 
-        <br /><br />
+<input
+type="text"
+placeholder="e.g. Blood Test"
+value={title}
+onChange={(e)=>setTitle(e.target.value)}
+required
+/>
 
-        <input
-          type="date"
-          value={recordDate}
-          onChange={(e) => setRecordDate(e.target.value)}
-          required
-        />
+</div>
 
-        <br /><br />
+<div className="form-group">
 
-        <input
-          type="file"
-          onChange={(e) => setFile(e.target.files[0])}
-          required
-        />
+<label>Category</label>
 
-        <br /><br />
+<select
+value={category}
+onChange={(e)=>setCategory(e.target.value)}
+required
+>
+<option value="">Select Category</option>
+<option>Prescription</option>
+<option>Blood Test</option>
+<option>X-Ray</option>
+<option>Ultrasound</option>
+<option>Other</option>
+</select>
 
-        <button type="submit">
-          Upload Record
-        </button>
+</div>
 
-      </form>
+<div className="form-group">
+
+<label>Record Date</label>
+
+<input
+type="date"
+value={recordDate}
+onChange={(e)=>setRecordDate(e.target.value)}
+required
+/>
+
+</div>
+
+<div className="form-group">
+
+<label>Upload File</label>
+
+<input
+type="file"
+onChange={(e)=>setFile(e.target.files[0])}
+required
+/>
+
+</div>
+
+</div>
+
+<button className="upload-btn">
+💜 Upload Record
+</button>
+
+</form>
       <hr />
 
 <h3>Uploaded Records</h3>
 
-<table border="1" cellPadding="10">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Category</th>
-      <th>Date</th>
-      <th>File</th>
-      <th>Action</th>
-    </tr>
-  </thead>
+<h2 style={{marginTop:"40px"}}>📂 Uploaded Records</h2>
 
-  <tbody>
-    {records.map((record) => (
-      <tr key={record.id}>
-        <td>{record.title}</td>
-        <td>{record.category}</td>
-        <td>{record.record_date}</td>
+<div className="records-grid">
 
-        <td>
-  <a
-    href={`http://localhost:5000/upload/${record.file_name}`}
-    target="_blank"
-    rel="noreferrer"
-  >
-    View
-  </a>
-</td>
+{records.map((record)=>(
 
-<td>
-  <button onClick={() => deleteRecord(record.id)}>
-    Delete
-  </button>
-</td>
-      </tr>
-    ))}
-  </tbody>
-</table>
+<div className="record-box" key={record.id}>
+
+<h3>{record.title}</h3>
+
+<p><strong>Category:</strong> {record.category}</p>
+
+<p><strong>Date:</strong> {record.record_date}</p>
+
+<div className="record-actions">
+
+<a
+className="view-btn"
+href={`http://localhost:5000/upload/${record.file_name}`}
+target="_blank"
+rel="noreferrer"
+>
+👁 View
+</a>
+
+<button
+className="delete-btn"
+onClick={()=>deleteRecord(record.id)}
+>
+🗑 Delete
+</button>
+
+</div>
+
+</div>
+
+))}
+
+</div>    </div>
     </div>
   );
 

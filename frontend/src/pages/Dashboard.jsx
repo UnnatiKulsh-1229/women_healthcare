@@ -4,17 +4,54 @@ import { useNavigate } from "react-router-dom";
 import Sidebar from "../components/Sidebar";
 import "../style/Dashboard.css";
 import Navbar from "../components/Navbar";
+import axios from "axios";
+import { useState } from "react";
 function Dashboard() {
   const navigate = useNavigate();
+  const email = localStorage.getItem("email");
+  const userName = email ? email.split("@")[0] : "User";
+
+  const [cycleData, setCycleData] = useState(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
 
-    if (!token) {
-      navigate("/");
-    }
-  }, []);
+  if (!token) {
+    navigate("/");
+    return;
+  }
 
+  fetchCycleData();
+
+}, []);
+const fetchCycleData = async () => {
+
+  try {
+
+    const email = localStorage.getItem("email");
+
+    const response = await axios.get(
+      `http://localhost:5000/api/cycle/latest/${email}`
+    );
+
+    setCycleData(response.data);
+
+  } catch (err) {
+
+    console.log(err);
+  }
+};
+  const calculateCycleDay = () => {
+  if (!cycleData?.last_period) return "--";
+
+  const today = new Date();
+  const lastPeriod = new Date(cycleData.last_period);
+
+  const diffTime = today - lastPeriod;
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+  return diffDays + 1;
+};
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("email");
@@ -23,6 +60,19 @@ function Dashboard() {
 
     navigate("/", { replace: true });
   };
+  /*const fetchCycleData = async () => {
+  try {
+    const email = localStorage.getItem("email");
+
+    const response = await axios.get(
+      `http://localhost:5000/api/cycle/latest/${email}`
+    );
+
+    setCycleData(response.data);
+  } catch (err) {
+    console.log(err);
+  }
+};*/
 
   return (
     <div className="dashboard">
@@ -34,18 +84,21 @@ function Dashboard() {
       <div className="main-content">
         {/* Navbar */}
         <Navbar />
-        <div className="dashboard-header">
+        <div className="hero">
 
-          <div>
-            <h1>Hello, Unnati 👋</h1>
-            <p>Here's what's happening with your health today.</p>
-          </div>
+  <div className="hero-left">
+    <h1>Hello, {userName} 👋</h1>
+    <p>Here's what's happening with your cycle today.</p>
+  </div>
 
-          <button className="logout-btn" onClick={handleLogout}>
-            Logout
-          </button>
-
-        </div>
+  <div className="cycle-day">
+    <span>📅</span>
+    <div>
+      <small>Today is</small>
+      <h3>Cycle Day {calculateCycleDay()}</h3>
+    </div>
+  </div>
+</div>
 
         {/* Cards */}
 
