@@ -9,20 +9,16 @@ import { useState } from "react";
 function Dashboard() {
   const navigate = useNavigate();
   const email = localStorage.getItem("email");
-  const userName = email ? email.split("@")[0] : "User";
-
+  const userName = email ? email.split("@")[0] : "Guest";
   const [cycleData, setCycleData] = useState(null);
 
   useEffect(() => {
   const token = localStorage.getItem("token");
 
-  if (!token) {
-    navigate("/");
-    return;
+  // Only fetch personal data if the user is logged in
+  if (token) {
+    fetchCycleData();
   }
-
-  fetchCycleData();
-
 }, []);
 const fetchCycleData = async () => {
 
@@ -60,20 +56,7 @@ const fetchCycleData = async () => {
 
     navigate("/", { replace: true });
   };
-  /*const fetchCycleData = async () => {
-  try {
-    const email = localStorage.getItem("email");
-
-    const response = await axios.get(
-      `http://localhost:5000/api/cycle/latest/${email}`
-    );
-
-    setCycleData(response.data);
-  } catch (err) {
-    console.log(err);
-  }
-};*/
-
+  
   return (
     <div className="dashboard">
 

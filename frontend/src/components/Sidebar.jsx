@@ -1,81 +1,77 @@
 import {
   FaHome,
-  FaCalendarAlt,
-  FaChartLine,
-  FaHistory,
+  FaTint,
   FaFileMedical,
-  FaBell,
-  FaCog,
   FaSignOutAlt,
+  FaSmile,
+  FaRobot,
 } from "react-icons/fa";
 
+import { Link, useNavigate } from "react-router-dom";
 import "../style/Sidebar.css";
 
 export default function Sidebar() {
+  const navigate = useNavigate();
+  const token = localStorage.getItem("token");
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("email");
+
+    alert("Logged out successfully!");
+
+    navigate("/", { replace: true });
+  };
+
   return (
     <div className="sidebar">
-
+      {/* Logo */}
       <div className="logo">
-
         <div className="logoIcon">🌸</div>
 
         <div>
-
           <h2>WomenCare</h2>
-
           <p>Your Health, Our Priority</p>
-
         </div>
-
       </div>
 
+      {/* Menu */}
       <ul className="menu">
+        <Link to="/" className="menu-link">
+          <li>
+            <FaHome /> Dashboard
+          </li>
+        </Link>
 
-        <li className="active">
-          <FaHome />
-          Dashboard
-        </li>
+        <Link to="/CycleTracker" className="menu-link">
+          <li>📅 Cycle Tracker</li>
+        </Link>
 
-        <li>
-          <FaCalendarAlt />
-          Cycle Tracker
-        </li>
+        <Link to="/MoodTracker" className="menu-link">
+          <li>
+            <FaSmile /> Mood Tracker
+          </li>
+        </Link>
 
-        <li>
-          <FaChartLine />
-          Prediction
-        </li>
+        <Link to="/WaterTracker" className="menu-link">
+          <li>
+            <FaTint /> Water Tracker
+          </li>
+        </Link>
 
-        <li>
-          <FaHistory />
-          History
-        </li>
-
-        <li>
-          <FaFileMedical />
-          Reports
-        </li>
-
-        <li>
-          <FaBell />
-          Reminders
-        </li>
-
-        <li>
-          <FaCog />
-          Settings
-        </li>
-
+        <Link to="/Chatbot" className="menu-link">
+          <li>
+            <FaRobot /> AI Chatbot
+          </li>
+        </Link>
       </ul>
 
-      <button className="logout">
-
-        <FaSignOutAlt />
-
-        Logout
-
-      </button>
-
+      {/* Logout */}
+      {token && (
+        <button className="logout" onClick={handleLogout}>
+          <FaSignOutAlt /> Logout
+        </button>
+      )}
     </div>
   );
 }

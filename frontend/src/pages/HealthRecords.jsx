@@ -87,8 +87,7 @@ const deleteRecord = async (id) => {
 <h1>🩺 Health Records</h1>
 
 <h3>
-Store prescriptions, reports and medical documents securely.
-</h3>
+Store prescriptions, reports and medical documents securely.</h3>
 
 
       <form onSubmit={uploadRecord}>
