@@ -7,7 +7,6 @@ import HealthRecords from "./pages/HealthRecords";
 import MoodTracker from "./pages/MoodTracker";
 import WaterTracker from "./pages/WaterTracker";
 import Chatbot from "./pages/Chatbot";
-
 import ProtectedRoute from "./components/protect_route";
 
 function App() {
@@ -15,16 +14,11 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-        {/* ---------- Public Routes ---------- */}
-
+        {/*  Public Routes  */}
         <Route path="/" element={<Dashboard />} />
-
         <Route path="/login" element={<Login />} />
-
         <Route path="/register" element={<Register />} />
-
-        {/* ---------- Protected Routes ---------- */}
-
+        {/*  Protected Routes  */}
         <Route
           path="/CycleTracker"
           element={

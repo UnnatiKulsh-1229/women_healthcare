@@ -59,19 +59,12 @@ export default function Sidebar() {
           </li>
         </Link>
 
-        <Link to="/Chatbot" className="menu-link">
+        {/*<Link to="/Chatbot" className="menu-link">
           <li>
             <FaRobot /> AI Chatbot
           </li>
-        </Link>
+        </Link>*/}
       </ul>
-
-      {/* Logout */}
-      {token && (
-        <button className="logout" onClick={handleLogout}>
-          <FaSignOutAlt /> Logout
-        </button>
-      )}
     </div>
   );
 }

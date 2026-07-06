@@ -6,6 +6,7 @@ import "../style/Dashboard.css";
 import Navbar from "../components/Navbar";
 import axios from "axios";
 import { useState } from "react";
+
 function Dashboard() {
   const navigate = useNavigate();
   const email = localStorage.getItem("email");
@@ -48,14 +49,6 @@ const fetchCycleData = async () => {
 
   return diffDays + 1;
 };
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("email");
-
-    alert("Logged out successfully!");
-
-    navigate("/", { replace: true });
-  };
   
   return (
     <div className="dashboard">
@@ -97,9 +90,9 @@ const fetchCycleData = async () => {
 
           </Link>
 
-          <Link to="/SymptomChecker" className="dashboard-card">
+          <Link to="/Chatbot" className="dashboard-card">
 
-            <h2>🩺 AI Symptom Checker</h2>
+            <h2>🩺 Your Personal healthcare Assistant!!</h2>
 
             <p>
               Check symptoms using AI-powered suggestions.

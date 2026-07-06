@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
 function Login() {
     const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
@@ -19,31 +18,23 @@ function Login() {
 
  const handleSubmit = async (e) => {
   e.preventDefault();
-
   try {
     const response = await axios.post(
       "http://localhost:5000/api/auth/login",
       loginData
     );
-
     // Save JWT Token
     localStorage.setItem("token", response.data.token);
-
-    // Save Email (optional)
+    // Save Email 
     localStorage.setItem("email", loginData.email);
-
     alert(response.data.message);
-
-    navigate("/Dashboard");
-
+    navigate("/");
   } catch (error) {
-
     if (error.response) {
       alert(error.response.data.message);
     } else {
-      alert("Server Error");
+      alert("Invalid details. Please try again.");
     }
-
   }
 };
   return (
