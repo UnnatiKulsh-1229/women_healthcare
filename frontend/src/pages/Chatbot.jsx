@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import "../style/Chatbot.css";
 import axios from "axios";
 function Chatbot() {
+  const userEmail = localStorage.getItem("email");
   const [loading, setLoading] = useState(false);
   const [messages, setMessages] = useState([
     {
@@ -26,11 +27,12 @@ function Chatbot() {
   setLoading(true);
   try {
     const response = await axios.post(
-      "http://localhost:5000/api/ai/chat",
-      {
-        message: userMessage,
-      }
-    );
+  "http://localhost:5000/api/ai/chat",
+  {
+    message: userMessage,
+    user_email: userEmail,
+  }
+);
     setMessages((prev) => [
       ...prev,
       {
@@ -51,7 +53,29 @@ function Chatbot() {
     setLoading(false);
   }
 };
+const fetchHistory = async () => {
+  try {
+    const response = await axios.get(
+      `http://localhost:5000/api/ai/history/${userEmail}`
+    );
 
+    if (response.data.success) {
+      const history = response.data.history.map((chat) => ({
+        sender: chat.role === "user" ? "user" : "bot",
+        text: chat.message,
+      }));
+
+      if (history.length > 0) {
+        setMessages(history);
+      }
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+useEffect(() => {
+  fetchHistory();
+}, []);
   return (
     <div className="chat-page">
 
@@ -93,6 +117,7 @@ function Chatbot() {
       </div>
 
     </div>
+    
   );
 }
 

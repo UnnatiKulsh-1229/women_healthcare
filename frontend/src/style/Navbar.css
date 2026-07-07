@@ -19,8 +19,21 @@ margin-bottom:30px;
   font-weight: 600;
   transition: 0.3s;
 }
+.login-btn{
+  background: rgb(100, 13, 100);
+  color:white;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s;
+  font-family: handlee, sans-serif;
+}
 
 .logout-btn:hover {
+  background: #b81f6b;
+}
+.login-btn:hover {
   background: #b81f6b;
 }
 .search-box{
