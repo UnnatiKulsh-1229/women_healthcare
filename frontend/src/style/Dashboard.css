@@ -5,6 +5,10 @@
     font-family:Poppins,sans-serif;
 }
 
+.main-content{
+    flex:1;
+    padding:10px;
+}
 
 .dashboard-header{
     display:flex;

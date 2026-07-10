@@ -83,7 +83,11 @@ function MoodTracker() {
 
 <div className="moods">
 
-<button onClick={()=>setMood("Happy")}>😊 Happy</button>
+<button
+  onClick={() => setMood("Happy")}
+>
+  😊 Happy
+</button>
 
 <button onClick={()=>setMood("Calm")}>😌 Calm</button>
 
@@ -108,7 +112,7 @@ onChange={(e)=>setNotes(e.target.value)}
 <button className="save-btn" onClick={saveMood}>
 Save Mood
 </button>
-
+<p><b>Selected Mood:</b> {mood}</p>
 </div>
 
 </div>

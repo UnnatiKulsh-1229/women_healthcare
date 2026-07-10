@@ -1,7 +1,5 @@
 const db = require("../config/db");
-
 const addCycleRecord = (req, res) => {
-
     const {
         user_email,
         last_period,
@@ -12,7 +10,6 @@ const addCycleRecord = (req, res) => {
         fertile_end,
         cycle_status
     } = req.body;
-
     const sql = `
     INSERT INTO cycle_records
     (
@@ -27,7 +24,6 @@ const addCycleRecord = (req, res) => {
     )
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `;
-
     db.query(
         sql,
         [
@@ -41,24 +37,19 @@ const addCycleRecord = (req, res) => {
             cycle_status
         ],
         (err, result) => {
-
             if (err) {
                 console.log(err);
                 return res.status(500).json(err);
             }
-
             res.status(201).json({
                 success: true,
                 message: "Prediction Saved Successfully"
             });
-
         }
     );
-
 };
 const getLatestCycleRecord = (req, res) => {
     const { email } = req.params;
-
     const sql = `
         SELECT *
         FROM cycle_records
@@ -66,22 +57,17 @@ const getLatestCycleRecord = (req, res) => {
         ORDER BY created_at DESC
         LIMIT 1
     `;
-
     db.query(sql, [email], (err, result) => {
-
         if (err) {
             console.log(err);
             return res.status(500).json(err);
         }
-
         if (result.length === 0) {
             return res.status(404).json({
                 message: "No cycle record found"
             });
         }
-
         res.json(result[0]);
-
     });
 };
 module.exports = {

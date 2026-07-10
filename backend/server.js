@@ -18,12 +18,14 @@ const waterRoutes = require("./routes/water_route");
 const cycleRoutes = require("./routes/cycle_route");
 const moodRoutes=require("./routes/Mood_route");
 const aiRoutes=new require("./routes/ai_route");
+const analysisRoutes=require("./routes/analysis_route");
 app.use("/api/auth", authRoutes);
 app.use("/api/cycle", cycleRoutes);
 app.use("/api/health", healthRoutes);
 app.use("/api/water", waterRoutes);
 app.use("/api/mood",moodRoutes);
 app.use("/api/ai",aiRoutes);
+app.use("/api/analysis",analysisRoutes);
 // Home Route
 app.get("/", (req, res) => {
     res.send("Server Running");

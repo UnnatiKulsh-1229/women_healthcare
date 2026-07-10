@@ -58,6 +58,9 @@ export default function Sidebar() {
             <FaTint /> Water Tracker
           </li>
         </Link>
+        <Link to="/Analysis" className="menu-link">
+          <li>📊 Analysis</li>
+        </Link>
 
         {/*<Link to="/Chatbot" className="menu-link">
           <li>

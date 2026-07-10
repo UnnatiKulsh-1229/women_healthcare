@@ -8,6 +8,7 @@ import MoodTracker from "./pages/MoodTracker";
 import WaterTracker from "./pages/WaterTracker";
 import Chatbot from "./pages/Chatbot";
 import ProtectedRoute from "./components/protect_route";
+import Analysis from "./pages/Analysis";
 
 function App() {
   return (
@@ -62,8 +63,17 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/Analysis"
+          element={
+            <ProtectedRoute>
+              <Analysis />
+            </ProtectedRoute>
+          }
+        />
 
       </Routes>
+      
     </BrowserRouter>
   );
 }
