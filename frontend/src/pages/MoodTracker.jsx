@@ -83,11 +83,7 @@ function MoodTracker() {
 
 <div className="moods">
 
-<button
-  onClick={() => setMood("Happy")}
->
-  😊 Happy
-</button>
+<button onClick={() => setMood("Happy")}> 😊 Happy</button>
 
 <button onClick={()=>setMood("Calm")}>😌 Calm</button>
 

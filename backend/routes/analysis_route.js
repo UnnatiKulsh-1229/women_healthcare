@@ -1,10 +1,6 @@
 const express = require("express");
 const router = express.Router();
-
-const {
-    getMoodAnalysis
-} = require("../controllers/analysisController");
-
-router.get("/mood/:email", getMoodAnalysis);
+const analysisController = require("../controllers/analysisController");
+router.get("/mood/:email", analysisController.getMoodAnalysis);
 
 module.exports = router;
