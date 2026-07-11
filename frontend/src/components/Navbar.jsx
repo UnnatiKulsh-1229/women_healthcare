@@ -18,16 +18,15 @@ function Navbar() {
 
   return (
     <div className="navbar">
-      <div className="search-box">
+     {/* <div className="search-box">
         <FaSearch className="search-icon" />
         <input type="text" placeholder="Search anything..." />
-      </div>
-
+      </div>*/}
       <div className="navbar-right">
-        <div className="notification">
+       { /*<div className="notification">
           <FaBell />
           <span className="badge">3</span>
-        </div>
+        </div>*/}
 
         <div className="profile">
           <div className="avatar">👩</div>

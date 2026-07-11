@@ -52,7 +52,64 @@ setMoodData(res.data);
 };
   useEffect(() => {
 fetchMood();
+fetchCycle();
+fetchHealthRecords();
+fetchInsights();
 }, []);
+//for cycle analysis
+const [cycleData, setCycleData] = useState({});
+const fetchCycle = async () => {
+    try {
+        const res = await axios.get(
+            `http://localhost:5000/api/analysis/cycle/${email}`
+        );
+        setCycleData(res.data);
+    } catch (err) {
+        console.log(err);
+    }
+};
+// for health record
+const [recordData, setRecordData] = useState([]);
+const fetchHealthRecords = async () => {
+    try {
+        const res = await axios.get(
+            `http://localhost:5000/api/analysis/healthrecords/${email}`
+        );
+        setRecordData(res.data);
+    } catch (err) {
+        console.log(err);
+    }
+};
+const recordPieData = {
+    labels: recordData.map(item => item.category),
+    datasets: [
+        {
+            label: "Health Records",
+            data: recordData.map(item => item.count),
+            backgroundColor: [
+                "#42A5F5",
+                "#66BB6A",
+                "#FFA726",
+                "#EF5350",
+                "#AB47BC",
+                "#26C6DA"
+            ],
+            borderWidth: 1
+        }
+    ]
+};
+// AI insight
+const [insights, setInsights] = useState({});
+const fetchInsights = async () => {
+    try{
+        const res = await axios.get(
+            `http://localhost:5000/api/analysis/insights/${email}`
+        );
+        setInsights(res.data);
+    }catch(err){
+        console.log(err);
+    }
+};
   return (
     <div className="dashboard">
       <Sidebar />
@@ -75,87 +132,87 @@ fetchMood();
               <h2>📅 Cycle Summary</h2>
 
               <table>
-                <tbody>
-                  <tr>
-                    <td>Average Cycle</td>
-                    <td>29 Days</td>
-                  </tr>
+  <tbody>
 
-                  <tr>
-                    <td>Longest Cycle</td>
-                    <td>31 Days</td>
-                  </tr>
+    <tr>
+      <td>Average Cycle</td>
+      <td>{cycleData.averageCycle || "-"} Days</td>
+    </tr>
 
-                  <tr>
-                    <td>Shortest Cycle</td>
-                    <td>27 Days</td>
-                  </tr>
+    <tr>
+      <td>Longest Cycle</td>
+      <td>{cycleData.longestCycle || "-"} Days</td>
+    </tr>
 
-                  <tr>
-                    <td>Status</td>
-                    <td>Regular</td>
-                  </tr>
+    <tr>
+      <td>Shortest Cycle</td>
+      <td>{cycleData.shortestCycle || "-"} Days</td>
+    </tr>
 
-                </tbody>
-              </table>
+    <tr>
+      <td>Last Period</td>
+      <td>{cycleData.lastPeriod || "-"}</td>
+    </tr>
+
+    <tr>
+      <td>Next Period</td>
+      <td>{cycleData.nextPeriod || "-"}</td>
+    </tr>
+
+    <tr>
+      <td>Ovulation Day</td>
+      <td>{cycleData.ovulationDay || "-"}</td>
+    </tr>
+
+    <tr>
+      <td>Cycle Status</td>
+      <td>{cycleData.cycleStatus || "-"}</td>
+    </tr>
+
+  </tbody>
+</table>
 
             </div>
 
-            <div className="analysis-card">
-              <h2>🤒 Symptom Distribution</h2>
-              <p>Pie Chart will appear here</p>
-            </div>
+            
 
             <div className="analysis-card">
               <h2>📁 Health Records</h2>
 
-              <table>
-                <tbody>
-                  <tr>
-                    <td>Blood Reports</td>
-                    <td>3</td>
-                  </tr>
-
-                  <tr>
-                    <td>Prescriptions</td>
-                    <td>5</td>
-                  </tr>
-
-                  <tr>
-                    <td>Scans</td>
-                    <td>2</td>
-                  </tr>
-
-                </tbody>
-              </table>
-
+              <div className="pie-chart">
+    {recordData.length > 0 ? (
+        <Pie data={recordPieData} options={options} />
+    ) : (
+        <p>No health records uploaded.</p>
+    )}
+</div>
             </div>
-
           </div>
-
           <div className="insight-card">
-
             <h2>🤖 AI Health Insights</h2>
-
             <ul>
-              <li>Your cycle has remained regular over the past few months.</li>
-              <li>Your most frequently reported mood is Happy.</li>
-              <li>Cramps are your most common symptom.</li>
-            </ul>
+  <li>
+    {insights.avgCycle >= 35
+      ? "⚠️ Your average cycle is longer than typical. Consider consulting a healthcare professional if this pattern continues."
+      : "✅ Your average cycle length appears to be within a typical range."}
+  </li>
 
+  <li>
+    {insights.topMood === "Anxious"
+      ? "💙 You've been feeling anxious most often. Consider relaxation exercises or speaking with someone you trust."
+      : `😊 Your most common mood has been ${insights.topMood || "not enough data"} .`}
+  </li>
+
+  <li>
+    {insights.topCategory
+      ? `📁 You've uploaded mostly ${insights.topCategory} records. Keeping your medical documents organized is a great habit.`
+      : "📁 Upload your health records to get more personalized insights."}
+  </li>
+</ul>
           </div>
-
         </div>
-
       </div>
-
     </div>
   );
-  
-
-
-
-
 }
-
 export default Analysis;
