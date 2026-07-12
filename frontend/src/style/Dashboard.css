@@ -1,15 +1,14 @@
 .dashboard{
     display:flex;
-    background:linear-gradient(pink,purple);
+    width:100%;
     min-height:100vh;
+    background:linear-gradient(135deg,#f9b3d1,#bf5ad8);
     font-family:Poppins,sans-serif;
 }
-
 .main-content{
     flex:1;
     padding:10px;
 }
-
 .dashboard-header{
     display:flex;
     justify-content:space-between;
@@ -55,15 +54,10 @@ background:#7C3AED;
 }
 
 .cards{
-
 display:grid;
-
 grid-template-columns:repeat(3,1fr);
-
 gap:25px;
-
 margin-bottom:35px;
-
 }
 
 .dashboard-card{
@@ -171,4 +165,5 @@ color:#2244df;
 .dashboard{
     flex-direction:column;
 }
+
 }
