@@ -10,7 +10,7 @@ function Chatbot() {
       text: "Hello! 👋 I'm your AI Women's Health Assistant. How can I help you today?",
     },
   ]);
-
+  const [selectedFile, setSelectedFile] = useState(null);
   const [input, setInput] = useState("");
 
   const sendMessage = async () => {
@@ -23,16 +23,34 @@ function Chatbot() {
       text: userMessage,
     },
   ]);
-  setInput("");
+  //setInput("");
+  //setSelectedFile(null);
   setLoading(true);
   try {
-    const response = await axios.post(
+    const formData = new FormData();
+
+formData.append("message", userMessage);
+formData.append("user_email", userEmail);
+
+if (selectedFile) {
+  formData.append("file", selectedFile);
+}
+console.log(selectedFile);
+
+for (let pair of formData.entries()) {
+  console.log(pair[0], pair[1]);
+}
+const response = await axios.post(
   "http://localhost:5000/api/ai/chat",
+  formData,
   {
-    message: userMessage,
-    user_email: userEmail,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
   }
 );
+setInput("");
+setSelectedFile(null);
     setMessages((prev) => [
       ...prev,
       {
@@ -114,6 +132,14 @@ useEffect(() => {
         <button onClick={sendMessage} disabled={loading}>
   {loading ? "Sending..." : "Send"}
 </button>
+<input
+  type="file"
+  accept=".pdf,.docx,.jpg,.jpeg,.png"
+  onChange={(e) => setSelectedFile(e.target.files[0])}
+/>
+{selectedFile && (
+  <p>📎 {selectedFile.name}</p>
+)}
       </div>
 
     </div>

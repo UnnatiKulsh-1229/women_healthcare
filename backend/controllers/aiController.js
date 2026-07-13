@@ -1,10 +1,38 @@
 const db = require("../config/db");
 const askGroq = require("../services/aiService");
-
-// ================= CHAT WITH AI =================
+const fs = require("fs");
+const path = require("path");
+const pdfParse = require("pdf-parse");
+const mammoth = require("mammoth");
+const Tesseract = require("tesseract.js");
+const today = new Date().toDateString();
+//  CHAT WITH AI 
 const chatWithAI = async (req, res) => {
+  
   try {
     const { message, user_email } = req.body;
+     let extractedText = "";
+
+if (req.file) {
+  const filePath = req.file.path;
+
+  if (req.file.mimetype === "application/pdf") {
+    const dataBuffer = fs.readFileSync(filePath);
+    const pdfData = await pdfParse(dataBuffer);
+    extractedText = pdfData.text;
+  }
+
+  console.log("Extracted Text:");
+  console.log(extractedText);
+}
+    console.log("Message:", message);
+    console.log("User:", user_email);
+    if (req.file) {
+      console.log("Uploaded File:");
+      console.log(req.file);
+    } else {
+      console.log("No file uploaded.");
+    }
 
     // Save user message
     db.query(
@@ -68,12 +96,32 @@ Current Cycle Status: ${cycle.cycle_status}
                 role: chat.role,
                 content: chat.message,
               }));
+              const finalPrompt = `
+              today's date is ${today}.
+User Cycle Information:
+${userProfile}
 
-            const reply = await askGroq(
-              message,
-              userProfile,
-              chatHistory
-            );
+Uploaded Medical Report:
+${extractedText || "No report uploaded"}
+
+User Question:
+${message}
+
+Instructions:
+- Today's date is ${today}. Use it for all date-related reasoning.
+- Explain in simple language.
+- Use the uploaded report if available.
+- Never diagnose diseases.
+- Recommend consulting a doctor when appropriate.
+`;
+
+console.log("FINAL PROMPT:");
+console.log(finalPrompt);
+console.log("==========");
+  const reply = await askGroq(
+    finalPrompt,
+    chatHistory
+);
 
             // Save AI reply
             db.query(
@@ -103,7 +151,7 @@ Current Cycle Status: ${cycle.cycle_status}
   }
 };
 
-// ================= GET CHAT HISTORY =================
+//  GET CHAT HISTORY 
 const getChatHistory = (req, res) => {
   const { user_email } = req.params;
 

@@ -3,37 +3,36 @@ const path = require("path");
 
 // Storage configuration
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "upload/");
+  destination: (req, file, cb) => {
+    cb(null, "uploads/");
   },
 
-  filename: function (req, file, cb) {
-    const uniqueName =
-      Date.now() + path.extname(file.originalname);
-
-    cb(null, uniqueName);
+  filename: (req, file, cb) => {
+    cb(
+      null,
+      Date.now() + "-" + file.originalname.replace(/\s+/g, "_")
+    );
   },
 });
 
-// File filter
+// Allow only supported files
 const fileFilter = (req, file, cb) => {
   const allowedTypes = [
-    "application/pdf",
+    "image/png",
     "image/jpeg",
     "image/jpg",
-    "image/png",
+    "application/pdf",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
   ];
 
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error("Only PDF, JPG, JPEG and PNG files are allowed."));
+    cb(new Error("Unsupported file type"), false);
   }
 };
 
-const upload = multer({
+module.exports = multer({
   storage,
   fileFilter,
 });
-
-module.exports = upload;
