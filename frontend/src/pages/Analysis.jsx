@@ -46,7 +46,7 @@ const options = {
 };
 const fetchMood = async () => {
 const res = await axios.get(
-`http://localhost:5000/api/analysis/mood/${email}`
+`${import.meta.env.VITE_API_URL}/api/analysis/mood/${email}`
 );
 setMoodData(res.data);
 };
@@ -61,7 +61,7 @@ const [cycleData, setCycleData] = useState({});
 const fetchCycle = async () => {
     try {
         const res = await axios.get(
-            `http://localhost:5000/api/analysis/cycle/${email}`
+            `${import.meta.env.VITE_API_URL}/api/analysis/cycle/${email}`
         );
         setCycleData(res.data);
     } catch (err) {
@@ -73,7 +73,7 @@ const [recordData, setRecordData] = useState([]);
 const fetchHealthRecords = async () => {
     try {
         const res = await axios.get(
-            `http://localhost:5000/api/analysis/healthrecords/${email}`
+            `${import.meta.env.VITE_API_URL}/api/analysis/records/${email}`
         );
         setRecordData(res.data);
     } catch (err) {
@@ -103,7 +103,7 @@ const [insights, setInsights] = useState({});
 const fetchInsights = async () => {
     try{
         const res = await axios.get(
-            `http://localhost:5000/api/analysis/insights/${email}`
+            `${import.meta.env.VITE_API_URL}/api/analysis/insights/${email}`
         );
         setInsights(res.data);
     }catch(err){

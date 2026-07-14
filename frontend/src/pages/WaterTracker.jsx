@@ -15,7 +15,7 @@ const fetchWater = async () => {
 
   try {
     const res = await axios.get(
-      `http://localhost:5000/api/water/today/${email}/${today}`
+      `${import.meta.env.VITE_API_URL}/api/water/today/${email}/${today}`
     );
 
     setGlasses(res.data.glasses);
@@ -28,7 +28,7 @@ const saveWater = async (count) => {
 
   try {
     await axios.post(
-      "http://localhost:5000/api/water/save",
+      `${import.meta.env.VITE_API_URL}/api/water/save`,
       {
         user_email: email,
         water_date: today,

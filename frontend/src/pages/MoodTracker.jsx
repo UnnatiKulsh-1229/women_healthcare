@@ -23,7 +23,7 @@ function MoodTracker() {
         const today=new Date().toISOString().split("T")[0];
 
         const res=await axios.get(
-            `http://localhost:5000/api/mood/today/${email}/${today}`
+            `${import.meta.env.VITE_API_URL}/api/mood/${email}/${today}`
         );
 
         setMood(res.data.mood || "");

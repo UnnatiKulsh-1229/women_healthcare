@@ -41,7 +41,7 @@ for (let pair of formData.entries()) {
   console.log(pair[0], pair[1]);
 }
 const response = await axios.post(
-  "http://localhost:5000/api/ai/chat",
+  `${import.meta.env.VITE_API_URL}/api/ai/chat`,
   formData,
   {
     headers: {

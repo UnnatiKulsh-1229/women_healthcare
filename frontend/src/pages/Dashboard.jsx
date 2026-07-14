@@ -28,8 +28,8 @@ const fetchCycleData = async () => {
     const email = localStorage.getItem("email");
 
     const response = await axios.get(
-      `http://localhost:5000/api/cycle/latest/${email}`
-    );
+  `${import.meta.env.VITE_API_URL}/api/cycle/latest/${email}`
+);
 
     setCycleData(response.data);
 

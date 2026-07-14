@@ -64,7 +64,7 @@ function Tracker() {
   try {
 
     const response = await axios.post(
-      "http://localhost:5000/api/cycle/add",
+      `${import.meta.env.VITE_API_URL}/api/cycle/save`,
       {
         user_email: userEmail,
         last_period: lastPeriod,

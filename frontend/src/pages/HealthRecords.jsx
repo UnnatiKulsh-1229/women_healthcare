@@ -11,7 +11,7 @@ function HealthRecords() {
 const fetchRecords = async () => {
   try {
     const res = await axios.get(
-      `http://localhost:5000/api/health/all/${userEmail}`
+      `${import.meta.env.VITE_API_URL}/api/health/all/${userEmail}`
     );
 
     setRecords(res.data);
@@ -28,7 +28,7 @@ const deleteRecord = async (id) => {
 
   try {
     const res = await axios.delete(
-      `http://localhost:5000/api/health/delete/${id}`
+      `${import.meta.env.VITE_API_URL}/api/health/delete/${id}`
     );
 
     alert(res.data.message);
@@ -56,7 +56,7 @@ const deleteRecord = async (id) => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/health/upload",
+        `${import.meta.env.VITE_API_URL}/api/health/upload`,
         formData,
         {
           headers: {
@@ -181,7 +181,7 @@ required
 
 <a
 className="view-btn"
-href={`http://localhost:5000/upload/${record.file_name}`}
+href={`${import.meta.env.VITE_API_URL}/uploads/${record.file_path}`}
 target="_blank"
 rel="noreferrer"
 >
