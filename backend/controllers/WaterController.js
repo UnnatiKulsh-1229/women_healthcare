@@ -1,4 +1,4 @@
-const Water = require("../model/waterModel");
+const Water = require("../model/WaterModel");
 exports.saveWater = (req, res) => {
     Water.saveWater(req.body, (err) => {
 
