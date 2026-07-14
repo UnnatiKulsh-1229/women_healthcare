@@ -27,10 +27,10 @@ export default function Sidebar() {
     <div className="sidebar">
       {/* Logo */}
       <div className="logo">
-        <div className="logoIcon">🌸</div>
+        <div className="logoIcon">🚺</div>
 
         <div>
-          <h2>WomenCare</h2>
+          <h2>HerHealth</h2>
           <p>Your Health, Our Priority</p>
         </div>
       </div>

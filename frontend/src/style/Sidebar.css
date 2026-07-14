@@ -18,12 +18,17 @@
 }
 
 .logoIcon{
-    font-size:40px;
+    font-size:35px;
+    font-family: Harrington;
+
 }
 
 .logo h2{
     margin:0;
-    color:#6D28D9;
+    color:rgb(177, 3, 90);
+    font-size:30px;
+    font-weight: bold;
+    padding:10px;
 }
 
 .logo p{
